@@ -1,0 +1,41 @@
+.App {
+  
+  background-color: #151A30;
+  position: fixed;
+  min-width: 100%;
+  min-height: 100%;
+  background-size: cover;
+  background-position: center; 
+}
+
+.brand-logo{
+  margin-left: 3rem;
+}
+
+.dark{
+  background: #222B45;
+  color: #494a4e
+}
+
+.sign-out{
+  margin-left: 20px;
+}
+
+.search{
+  background: #151A30;
+  color: #737373;
+  
+}
+
+.search-btn{
+  background: #151A30;
+  color: #FFFFFF;
+}
+.nav_item {
+    padding-right: .5rem;
+    padding-left: .5rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    color: #FFFFFF;
+}
+
