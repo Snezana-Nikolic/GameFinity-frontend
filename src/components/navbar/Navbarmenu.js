@@ -1,9 +1,11 @@
-import React from 'react';
 
-
+import React, { useState } from 'react';
+import { FormControl, Button, Input } from '@material-ui/core';
 import { NavLink, withRouter } from 'react-router-dom'
 function Navbarmenu(props) {
-    console.log(props)
+
+    
+
     return (
         <>
             <nav className="dark">
@@ -14,7 +16,7 @@ function Navbarmenu(props) {
                         <li><NavLink to="/user">User</NavLink></li>
                         <li><NavLink to={{pathname:"/wishlist"}}>WishList</NavLink></li>
                         <li><NavLink to="chat">Chat</NavLink></li>
-                        <li><NavLink to="sign-out" className="sign-out">Sign Out</NavLink></li>
+                        <li><NavLink to="login" className="sign-out">Sign Out</NavLink></li>
                     </ul>
                 </div>
             </nav>
