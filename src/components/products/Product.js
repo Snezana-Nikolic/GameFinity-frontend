@@ -1,41 +1,39 @@
 import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
-
+import { apiCall } from "../../services/api";
+import { useParams } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import axios from "axios";
 const useStyles = makeStyles({
   root: {
     width: "100%",
     height: "100%",
   },
-  detail: {
-    width: "100vw",
-  },
+   bigImg: {
+     width: "80vw",
+   },
 });
 export const Product = () => {
-//   const classes = useStyles();
+  const classes = useStyles();
+  const { _id } = useParams();
 
-//   const [cards, setCard] = useState([]);
-//   useEffect(() => {
-//     axios({
-//       method: "get",
-//       url: "",
-//     }).then(function (response) {
-//       console.log(response);
-//       setCard(response.data);
-//     });
-//   }, []);
+  const [card, setCard] = useState([]);
+  useEffect(() => {
+    apiCall.get(`/games/${_id}`).then(function (response) {
+      console.log(response.data);
+       setCard(response.data)
+    });
+  }, []);
 
-  return (
-    <>
-      <div >product
-        {/* {cards.map((el, index) => (
-          <div key={el.id} className={classes.root}>
-            <img src={el.residents} alt="games" />
-            <p className="legend">opisd</p>
-          </div>
-        ))} */}
-      </div>
-    </>
-  );
+   return (
+    
+   <div>Single blog {_id}
+      <div className= {classes.root}>
+      {card.map(item  =>(
+        
+        <div className= {classes.bigImg} key={item._id} >
+         <img src ={item.image} alt="games" />
+        </div>
+      ))}
+      </div></div>
+       );
 };
+

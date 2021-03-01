@@ -1,20 +1,20 @@
 import React, { useEffect, useState }from 'react';
-import AppBar from '@material-ui/core/AppBar';
+// import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
-import CameraIcon from '@material-ui/icons/PhotoCamera';
+// import CameraIcon from '@material-ui/icons/PhotoCamera';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
+// import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
+// import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
+import { Link } from 'react-router-dom';
 import {DemoCarousel} from '../DemoCarousel';
-import axios from "axios";
+import {apiCall} from "../../services/api";
 // import { Router } from "../../Router";
 
 
@@ -52,18 +52,14 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function Products() {
+export default function Products(props) {
   const classes = useStyles();
 
-  const [cards, setCard] = useState([]);
+  const [cards, setCards] = useState([]);
   useEffect(() => {
-    axios({
-      method: "get",
-      url: "http://gamefinity-api.herokuapp.com/games",
-      
-    }).then(function (response) {
+    apiCall('/games').then(function (response) {
         //console.log(response)
-      setCard(response.data)
+      setCards(response.data)
 
 
      
@@ -100,12 +96,12 @@ export default function Products() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" color="primary" ><Link to="/product">View more</Link>
+                    <Button size="small" color="primary" ><Link to={`/product/${card._id}`} >View more</Link>
                       
                     </Button>
-                    <Button size="small" color="primary">
+                    {/* <Button size="small" color="primary">
                       Edit
-                    </Button>
+                    </Button> */}
                   </CardActions>
                 </Card>
               </Grid>

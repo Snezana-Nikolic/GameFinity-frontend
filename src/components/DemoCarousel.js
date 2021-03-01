@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 import { makeStyles } from "@material-ui/core/styles";
-import axios from "axios";
+import {apiCall} from '../services/api'
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -18,9 +18,9 @@ export const DemoCarousel = () => {
 
   const [cards, setCard] = useState([]);
   useEffect(() => {
-    axios({
+    apiCall({
       method: "get",
-       url: "http://gamefinity-api.herokuapp.com/games",
+       url: "/games",
       // url: "https://rickandmortyapi.com/api/episode",
 
       
