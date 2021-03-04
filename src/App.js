@@ -4,7 +4,7 @@ import './App.css';
 import { NavBar } from "./components/navbar/NavBar";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import  Footer from "./components/footer/Footer";
-import { Product } from "./components/products/Product";
+import  Product  from "./components/products/Product";
 import Home from './pages/Home'
 import User from './pages/User'
 import WishList from './pages/WishList'

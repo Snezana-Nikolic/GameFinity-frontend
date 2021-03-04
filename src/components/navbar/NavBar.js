@@ -19,7 +19,7 @@ export const NavBar = (props) => {
           </NavLink>
           <ul id="nav-mobile" className="right hide-on-med-and-down">
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink exact to="/">Home</NavLink>
             </li>
             <li>
               <NavLink to="/user">User</NavLink>

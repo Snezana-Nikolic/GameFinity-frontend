@@ -15,7 +15,6 @@ import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 import {DemoCarousel} from '../DemoCarousel';
 import {apiCall} from "../../services/api";
-import ProductCard from '../products/ProductCard'
 // import { Router } from "../../Router";
 
 
@@ -52,34 +51,50 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-export default function Products(props) {
-  const classes = useStyles();
-
-  const [cards, setCards] = useState([]);
-  useEffect(() => {
-    apiCall('/games').then(function (response) {
-        //console.log(response)
-      setCards(response.data)
-
-
-     
-    });
-  }, []);
-
-
-  return (
-    <React.Fragment>
+export default function ProductCard(props) {
+     const classes = useStyles();
+   
+     return (
+        
+           <React.Fragment>
+         
+        <Container className={classes.cardGrid} maxWidth="md">
+          {/* End hero unit */}
+          <Grid container spacing={4}>
+            
+              <Grid item key={props._id} xs={12} sm={6} md={4}>
+                <Card className={classes.card}>
+                  <CardMedia
+                    className={classes.cardMedia}
+                    image={props.product.image}
+                     title={props.product.name}
+                  />
+                  <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                     {props.product.name}
+                    </Typography>
+                    <Typography>
+                     {props.product.description}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small" color="primary" ><Link to={`/product/${props.product._id}`} >View more</Link>
+                      
+                    </Button>
+                    {/* <Button size="small" color="primary">
+                      Edit
+                    </Button> */}
+                  </CardActions>
+                </Card>
+              </Grid>
+          
+          </Grid>
+        </Container>
       
-      <main>
-        {/* Hero unit */}
-        <div className={classes.heroContent}>
-        <DemoCarousel />
-        </div>
-        {cards.map((product)=> 
-        <ProductCard key={product._id} product={product} />)}
-      </main>
       
     </React.Fragment>
   );
 }
+
+
+

@@ -11,6 +11,7 @@ const useStyles = makeStyles({
   },
   slider: {
       width: "100vw"
+      
   }
 });
 export const DemoCarousel = () => {
