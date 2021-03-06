@@ -26,7 +26,7 @@ export const GameForm = () => {
   console.log(_id);
   const classes = useStyles();
   const [formFields, setFormFields] = useState({
-    creator: "IO Interactive",
+    creator: "",
     name: "",
     version: "",
     genre: ["action", "stealth"],
@@ -57,29 +57,32 @@ export const GameForm = () => {
   };
   
   return (
-    <form onSubmit={onFormSubmit}>
-      <label>Creator:</label>
+    <form onSubmit={onFormSubmit} className="gameinput">
       <input
         type="text"
         name="creator"
         value={formFields.creator}
         onChange={onFormFieldChange}
+        className="inputGame"
+        placeholder="Creator"
       />{" "}
       <br />
-      <label>Name game:</label>
       <input
         type="text"
         name="name"
         value={formFields.name}
         onChange={onFormFieldChange}
+        className="inputGame"
+        placeholder="Game name"
       />{" "}
       <br />
-      <label>Version:</label>
       <input
         type="text"
         name="version"
         value={formFields.version}
         onChange={onFormFieldChange}
+        className="inputGame"
+        placeholder="Version"
       />{" "}
       <br />
       {/* {<label>Genre:</label>
@@ -90,11 +93,12 @@ export const GameForm = () => {
         onChange={onFormFieldChange}
       />{" "}
       <br />} */}
-      <FormControl className={classes.formControl}>
+      <FormControl>
         <InputLabel>Console Type:</InputLabel>
         <Select
         // value={consoleType}
         // onChange={handleChange}
+        className="dropdown"
         >
           <MenuItem value="">
             <em>None</em>
@@ -102,32 +106,35 @@ export const GameForm = () => {
           <MenuItem value="PS 5">PS 5</MenuItem>
           <MenuItem value="Xbox one">Xbox One</MenuItem>
         </Select>
-        <FormHelperText>Some important helper text</FormHelperText>
+        {/* <FormHelperText> Select game genre </FormHelperText> */}
       </FormControl>
       <br />
-      <label>State:</label>
       <input
         type="text"
         name="state"
         value={formFields.state}
         onChange={onFormFieldChange}
+        className="inputGame"
+        placeholder="State"
       />{" "}
       <br />
-      <label>Quantity:</label>
       <input
         type="text"
         name="quantity"
         value={formFields.quantity}
         onChange={onFormFieldChange}
+        className="inputGame"
+        placeholder="Quantity"
       />{" "}
       <br />
-      <label>Description:</label>
       <textarea
         minLength="10"
         type="text"
         name="description"
         value={formFields.description}
         onChange={onFormFieldChange}
+        placeholder="Description"
+        className="inputGame textarea"
       />{" "}
       <br />
       <br />
@@ -135,8 +142,8 @@ export const GameForm = () => {
       <input type="file" name="image" onChange={onFormFieldChange} />
       <br />
       <br />
-      <Button type="submit" variant="contained" color="primary">
-        Add Blog
+      <Button type="submit" variant="contained" className="addgame" >
+        Add Game
       </Button>
     </form>
   );

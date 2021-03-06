@@ -5,17 +5,17 @@ import {apiCall} from '../../services/api'
 const columns = [
   { field: "_id", headerName: "ID", width: 70 },
   { field: "user", headerName: "User", width: 130 },
-  { field: "name", headerName: "Name", width: 130 },
+  { field: "name", headerName: "Name", width: 200 },
   { field: "creator", headerName: "Creator", width: 130 },
   { field: "version", headerName: "Version", width: 130 },
   // { field: "genre", headerName: "Genre", width: 130 },
   // { field: "consoleType", headerName: "ConsoleType", width: 130 },
-  { field: "state", headerName: "State", width: 130 },
-  { field: "quantity", headerName: "Quantity", width: 130 },
+  { field: "state", headerName: "State", width: 110 },
+  { field: "quantity", headerName: "Quantity", width: 110 },
   { field: "description", headerName: "Desc", width: 130 },
   {
     field: "age",
-    headerName: "Age",
+    headerName: "Edit",
     type: "number",
     width: 90,
     renderCell: ({row}) => {
@@ -60,8 +60,8 @@ export const GamesTable = () => {
       .catch((e) => console.log(e));
   }, []);
   return (
-    <div style={{ height: 400, width: "100%" }}>
-      <DataGrid getRowId={(row) => row._id} rows={games} columns={columns} pageSize={5} />
+    <div style={{ height: "90vh", width: "100%" }}>
+      <DataGrid getRowId={(row) => row._id} rows={games} columns={columns} pageSize={10} />
     </div>
   );
 };
