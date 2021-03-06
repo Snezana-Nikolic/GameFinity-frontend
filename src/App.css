@@ -1,12 +1,10 @@
 .App {
-  
   background-color: #151A30;
   min-width: 100%;
   min-height: 100%;
   background-size: cover;
   background-position: center; 
   overflow-x: hidden;
-  
 }
 
 .brand-logo{
@@ -117,4 +115,10 @@
   align-self: center;
 }
 
+.inputgame {
+  color: white;
+}
 
+.table {
+  color: white;
+}

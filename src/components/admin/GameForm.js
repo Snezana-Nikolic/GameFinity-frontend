@@ -3,22 +3,22 @@ import { Button } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import { apiCall } from "../../services/api";
 //  import {white} from 'material-ui/styles/colors';
- import { makeStyles } from '@material-ui/core/styles';
- import InputLabel from '@material-ui/core/InputLabel';
- import MenuItem from '@material-ui/core/MenuItem';
- import FormHelperText from '@material-ui/core/FormHelperText';
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
- import Select from '@material-ui/core/Select';
+import Select from '@material-ui/core/Select';
 
- const useStyles = makeStyles((theme) => ({
-   formControl: {
-    margin: theme.spacing(1),
-     minWidth: 305,
+const useStyles = makeStyles((theme) => ({
+  //  formControl: {
+  //   margin: theme.spacing(1),
+  //    minWidth: 305,
        
-   },
-   selectEmpty: {
-     marginTop: theme.spacing(2),
-  },
+  //  },
+  //  selectEmpty: {
+  //    marginTop: theme.spacing(2),
+  // },
 }));
 
 
@@ -26,7 +26,7 @@ import FormControl from '@material-ui/core/FormControl';
 export  const GameForm = () => {
   const { _id } = useParams();
   console.log(_id);
-   const classes = useStyles();
+  const classes = useStyles();
   const [formFields, setFormFields] = useState({ creator: "", name: "",version: "", genre: [], state: "", quantity: "", description: "", consoleType: [] });
 
   //  const [consoleType, setConsoleType] = useState({ consoleType:""  });
@@ -77,29 +77,32 @@ export  const GameForm = () => {
      };
   return (
     <form onSubmit={onFormSubmit}>
-
-      <label>Creator:</label>
       <input
         type="text"
         name="creator"
         value={formFields.creator}
         onChange={onFormFieldChange}
+        placeholder="Creator"
+        className="inputgame"
+        style={{ border: "black 2px solid", borderRadius: "8px", paddingLeft: "7px", paddingRight: "5px", width: "30vw", margin: "20px", marginLeft: "30px", boxShadow: "inset 0px 0px 3px 1px #000000" }}
       />{" "}
       <br></br>
-      <label>Name game:</label>
       <input
         type="text"
         name="name"
         value={formFields.name}
         onChange={onFormFieldChange}
+        placeholder="Game"
+        style={{ border: "black 2px solid", borderRadius: "8px", paddingLeft: "7px", paddingRight: "5px", width: "30vw", margin: "20px", marginLeft: "30px", boxShadow: "inset 0px 0px 3px 1px #000000" }}
       />{" "}
       <br></br>
-      <label>Version:</label>
       <input
         type="text"
         name="version"
         value={formFields.version}
         onChange={onFormFieldChange}
+        placeholder="Version"
+        style={{ border: "black 2px solid", borderRadius: "8px", paddingLeft: "7px", paddingRight: "5px", width: "30vw", margin: "20px", marginLeft: "30px", boxShadow: "inset 0px 0px 3px 1px #000000" }}
       />{" "}
       <br></br>
       {/* {<label>Genre:</label>
@@ -111,53 +114,55 @@ export  const GameForm = () => {
       />{" "}
       <br></br>} */}
       <FormControl className={classes.formControl}>
-        <InputLabel>Console Type:</InputLabel>
+        {/* <InputLabel style={{ marginLeft: "35px" }}  >Console Type:</InputLabel> */}
         <Select
           // value={consoleType}
           // onChange={handleChange}
+          style={{ border: "black 2px solid", borderRadius: "8px", paddingLeft: "7px", paddingRight: "5px", width: "12vw", margin: "20px", marginLeft: "30px", color: "white", boxShadow: "inset 0px 0px 3px 1px #000000" }}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
+          <option value="" disabled selected>Select Genre</option>
           <MenuItem value='PS 5'>PS 5</MenuItem>
           <MenuItem value='Xbox one'>Xbox One</MenuItem>
          
         </Select>
-        <FormHelperText>Some important helper text</FormHelperText>
+        {/* <FormHelperText>Some important helper text</FormHelperText> */}
       </FormControl>
       <br></br>
-      <label>State:</label>
       <input
         type="text"
         name="state"
         value={formFields.state}
         onChange={onFormFieldChange}
+        placeholder="State"
+        style={{ border: "black 2px solid", borderRadius: "8px", paddingLeft: "7px", paddingRight: "5px", width: "30vw", margin: "20px", marginLeft: "30px", boxShadow: "inset 0px 0px 3px 1px #000000" }}
       />{" "}
       <br></br>
-      <label>Quantity:</label>
       <input
         type="text"
         name="quantity"
         value={formFields.quantity}
         onChange={onFormFieldChange}
+        placeholder="Quantity"
+        style={{ border: "black 2px solid", borderRadius: "8px", paddingLeft: "7px", paddingRight: "5px", width: "30vw", margin: "20px", marginLeft: "30px", boxShadow: "inset 0px 0px 3px 1px #000000" }}
       />{" "}
       <br></br>
-      <label>Description:</label>
       <textarea
         minLength="10"
         type="text"
         name="description"
         value={formFields.description}
         onChange={onFormFieldChange}
+        placeholder="Description"
+        style={{ border: "black 2px solid", borderRadius: "8px", paddingLeft: "7px", paddingRight: "5px", width: "25vw", height: "10vw", margin: "20px", marginLeft: "30px", boxShadow: "inset 0px 0px 3px 1px #000000" }}
       />{" "}
       <br></br>
       <br></br>
-      <label>Cover Image:</label>
-      <input type="file" name="image" onChange={onFormFieldChange} />
+      <label for="file" style={{ marginLeft:"30px", color: "white", boxShadow: "0px 0px 4px 2px rgba(0, 0, 3, 1)", padding: "20px", borderRadius: "5px" }} >Add Image</label>
+      <input id="file" type="file" name="image" onChange={onFormFieldChange} style={{ display: "none" }} />
       <br></br>
       <br></br>
-      <Button type="submit" variant="contained" color="primary">
-        Add Blog
+      <Button type="submit" style={{ marginTop: "20px", marginLeft: "30px", backgroundColor: "none", color: "white", marginBottom: "50px", boxShadow: "0px 0px 4px 2px rgba(0, 0, 3, 1)", padding: "13px" }} >
+        Add  Game
       </Button>
     </form>
   );
