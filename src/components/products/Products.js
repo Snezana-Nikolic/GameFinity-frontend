@@ -1,25 +1,12 @@
-import React, { useEffect, useState }from 'react';
-// import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-// import CameraIcon from '@material-ui/icons/PhotoCamera';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-// import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-// import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { Link } from 'react-router-dom';
-import {DemoCarousel} from '../DemoCarousel';
-import {apiCall} from "../../services/api";
-import ProductCard from '../products/ProductCard'
-// import { Router } from "../../Router";
-
+import React, { useEffect, useState } from "react";
+import { Grid } from "@material-ui/core/";
+import { makeStyles } from "@material-ui/core/styles";
+import { Container } from "@material-ui/core";
+import { apiCall } from "../../services/api";
+import ProductCard from "../products/ProductCard";
 
 const useStyles = makeStyles((theme) => ({
+  background: { backgroundColor: "#151a30" },
   icon: {
     marginRight: theme.spacing(2),
   },
@@ -35,12 +22,12 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(8),
   },
   card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
   },
   cardMedia: {
-    paddingTop: '56.25%', // 16:9
+    paddingTop: "56.25%",
   },
   cardContent: {
     flexGrow: 1,
@@ -51,35 +38,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-export default function Products(props) {
+const Products = (props) => {
   const classes = useStyles();
 
   const [cards, setCards] = useState([]);
   useEffect(() => {
-    apiCall('/games').then(function (response) {
-        //console.log(response)
-      setCards(response.data)
-
-
-     
+    apiCall("/games").then((response) => {
+      console.log(response);
+      setCards(response.data);
     });
   }, []);
 
-
   return (
-    <React.Fragment>
-      
-      <main>
-        {/* Hero unit */}
-        <div className={classes.heroContent}>
-        <DemoCarousel />
-        </div>
-        {cards.map((product)=> 
-        <ProductCard key={product._id} product={product} />)}
+    <>
+      <main className={classes.background}>
+        <div className={classes.heroContent}></div>
+        <Container className={classes.cardGrid} maxWidth="md">
+          <Grid container spacing={4}>
+            {cards.map((product) => (
+              <ProductCard key={product._id} product={product} />
+            ))}
+          </Grid>
+        </Container>
       </main>
-      
-    </React.Fragment>
+    </>
   );
-}
+};
+
+export default Products;

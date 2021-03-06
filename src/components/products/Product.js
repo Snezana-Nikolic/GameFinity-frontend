@@ -1,187 +1,125 @@
-import React, { useState, useEffect } from 'react'
-import {apiCall} from '../../services/api'
-import { useParams } from 'react-router-dom'
-import Loader from '../../components/Loader'
+import { useState, useEffect } from "react";
+import { apiCall } from "../../services/api";
+import { useParams } from "react-router-dom";
+import {
+  Container,
+  Box,
+  Grid,
+  Typography,
+  Button,
+  Card,
+  CardMedia,
+  makeStyles,
+} from "@material-ui/core";
+import { Rating } from "@material-ui/lab";
+import { StarBorder, ShoppingCart } from "@material-ui/icons";
+// import Loader from "../../components/Loader";
 
-export default function Product(){
-    const { _id } = useParams()
-    const url = `https://gamefinity-api.herokuapp.com/game/${_id}`
-    const [product, setProduct] = useState({
-        loading: false,
-        data: null,
-        error: false
-    })
+const useStyles = makeStyles((theme) => ({
+  background: { backgroundColor: "#151a30" },
+  whiteText: { color: "#FFFFFF" },
+  card: {
+    height: 512,
+  },
+}));
 
-    let content = null
+const Product = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState({
+    name: "",
+    user: "",
+    creator: "",
+    genre: [],
+    consoleType: [],
+    image: "",
+    rating: 0,
+    spaceBuck: 0,
+  });
 
-    useEffect(() => {
-        setProduct({
-            loading: true,
-            data: null,
-            error: false
-        })
-        apiCall.get(url)
-            .then(response => {
-                setProduct({
-                    loading: false,
-                    data: response.data,
-                    error: false
-                })
-            })
-            .catch(() => {
-                setProduct({
-                    loading: false,
-                    data: null,
-                    error: true
-                })
-            })
-    }, [url])
+  const classes = useStyles();
 
-    if(product.error){
-        content = <p>
-            There was an error please refresh or try again later.
-        </p>
-    }
+  useEffect(
+    () =>
+      setTimeout(
+        () =>
+          apiCall
+            .get(`game/${id}`)
+            .then((response) => setProduct({ ...response.data }))
+            .catch((err) => console.error(err)),
+        1
+      ),
+    [id]
+  );
 
-    if(product.loading){
-        content = <Loader></Loader>
-    }
-
-    if(product){
-      console.log(product)
-        content = 
-        <div>
-            <h1 className="text-2xl font-bold mb-3">
-                Name:{product.name}
-            </h1>
-            <div>
-                Img<img
-                    src={product.image}
-                    alt={product.name}
+  return (
+    <section>
+      <Container className={classes.background} maxWidth="lg">
+        <Box py={12}>
+          <Grid container spacing={8}>
+            <Grid item xs={12} md={6}>
+              <Box display="flex" height="100%">
+                <Box my="auto">
+                  <Typography
+                    variant="h3"
+                    color="primary"
+                    component="h3"
+                    gutterBottom={true}
+                  >
+                    {product.name}
+                  </Typography>
+                  <Typography
+                    variant="h3"
+                    className={classes.whiteText}
+                    component="h3"
+                    gutterBottom={true}
+                  >
+                    Created by: {product.creator}
+                  </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    color="textSecondary"
+                    paragraph={true}
+                    className={classes.whiteText}
+                  >
+                    Descripton: {product.description}
+                  </Typography>
+                  <Box component="fieldset" borderColor="transparent">
+                    <Typography
+                      className={classes.whiteText}
+                      component="legend"
+                    >
+                      Average Rating: {product.rating}
+                      <Rating
+                        name="customized-empty"
+                        value={product.rating}
+                        precision={0.1}
+                        max={10}
+                        emptyIcon={<StarBorder fontSize="inherit" />}
+                        readOnly
+                      />
+                    </Typography>
+                  </Box>
+                  <Box mt={3}>
+                    <Button variant="contained" color="primary">
+                      <ShoppingCart /> Add to Cart
+                    </Button>
+                  </Box>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Card>
+                <CardMedia
+                  image={product.image || ""}
+                  className={classes.card}
                 />
-            </div>
-            <div className="font-bold text-xl mb-3">
-                 price{product.spaceBuck}
-            </div>
-            <div>
-               description {product.description}
-            </div>
-        </div>
-    }
-
-    return (
-        <div>
-            {content}
-        </div>
-    )
+              </Card>
+            </Grid>
+          </Grid>
+        </Box>
+      </Container>
+    </section>
+  );
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useEffect, useState } from "react";
-// import { apiCall } from "../../services/api";
-// import { useParams } from "react-router-dom";
-// import { makeStyles } from "@material-ui/core/styles";
-// import Loader from '../../components/Loader'
-// const useStyles = makeStyles({
-//   root: {
-//     width: "100%",
-//     height: "100%",
-//   },
-//   bigImg: {
-//     width: "80%",
-//   },
-// });
-// export const Product = (props) => {
-//   const classes = useStyles();
-//   const { _id } = useParams();
-
-//   const [card, setCard] = useState();
-//   useEffect(() => {
-//     apiCall.get(`/game/${_id}`).then(function (response) {
-//       console.log(response.data);
-//       // setCard(response.data);
-//     });
-//   }, [_id]);
-
-//   return (
-//     <div>
-//       Single blog {_id}
-//       <div className={classes.root}>
-        
-//            <div className={classes.bigImg} key={card._id}>
-//             <img src={card.image} alt="games" />
-//             <p>Opis igrice:{card.description}</p>
-//           </div> 
-        
-//       </div>
-//     </div>
-//   );
-// };
-
-
+export default Product;
