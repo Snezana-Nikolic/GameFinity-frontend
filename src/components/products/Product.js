@@ -18,9 +18,12 @@ import { StarBorder, ShoppingCart } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
   background: { backgroundColor: "#151a30" },
   whiteText: { color: "#FFFFFF" },
+  textColor: { color: "#363636" },
   card: {
     height: 512,
   },
+  description: { color: "#707070", width: "70%" },
+  creator: { fontSize: "25px", marginBottom: "70px" },
 }));
 
 const Product = () => {
@@ -53,7 +56,7 @@ const Product = () => {
 
   return (
     <section>
-      <Container className={classes.background} maxWidth="lg">
+      <Container maxWidth="75vw">
         <Box py={12}>
           <Grid container spacing={8}>
             <Grid item xs={12} md={6}>
@@ -64,12 +67,13 @@ const Product = () => {
                     color="primary"
                     component="h3"
                     gutterBottom={true}
+                    className={classes.textColor}
                   >
                     {product.name}
                   </Typography>
                   <Typography
                     variant="h3"
-                    className={classes.whiteText}
+                    className={classes.textColor, classes.creator}
                     component="h3"
                     gutterBottom={true}
                   >
@@ -79,13 +83,13 @@ const Product = () => {
                     variant="subtitle1"
                     color="textSecondary"
                     paragraph={true}
-                    className={classes.whiteText}
+                    className={classes.textColor, classes.description}
                   >
                     Descripton: {product.description}
                   </Typography>
                   <Box component="fieldset" borderColor="transparent">
                     <Typography
-                      className={classes.whiteText}
+                      className={classes.textColor}
                       component="legend"
                     >
                       Average Rating: {product.rating}
