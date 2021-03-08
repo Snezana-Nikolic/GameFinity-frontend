@@ -297,7 +297,7 @@ export const GameForm = () => {
                   startIcon={<PhotoCamera />}
                   fullWidth
                 >
-                  Profile Pic
+                  Game image
                 </Button>
               </label>
             </Grid>
