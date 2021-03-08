@@ -1,7 +1,8 @@
+/* eslint-disable array-callback-return */
 import { useContext, useState } from "react";
 import { apiCall } from "../services/api";
 import { AuthContext } from "../contexts/auth";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link as RouterLink } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -86,7 +87,7 @@ const SignUp = () => {
     password: "",
     location: "",
     role: "",
-    profilePic: null,
+    profilePic: undefined,
   });
   const [open, setOpen] = useState(false);
   const classes = useStyles();
@@ -99,23 +100,24 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const profilePic = new FormData();
-    const { profilePic: image } = formFields;
-    if (image) profilePic.append("profilePic", image, image.name);
-    console.log(formFields);
+    const formData = new FormData();
+    const { profilePic = undefined } = formFields;
+    Object.keys(formFields).forEach((item) =>
+      item === "profilePic" && profilePic
+        ? formData.append(item, profilePic, profilePic.name)
+        : formData.append(item, formFields[item])
+    );
     apiCall
-      .post("/user", { ...formFields, profilePic })
+      .post("/user", formData)
       .then((result) => {
         let { token } = result.data;
-        console.log(result.data);
+        console.log(result);
         setTokens(token);
       })
-      .catch((e) => {
-        console.error(e);
-      });
+      .catch((e) => console.error(e));
   };
 
-  if (authTokens) <Redirect to="/" />;
+  if (authTokens) return <Redirect to="/" />;
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -144,6 +146,7 @@ const SignUp = () => {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  value={formFields.firstName}
                   onChange={handleChange}
                 />
               </Grid>
@@ -156,6 +159,7 @@ const SignUp = () => {
                   label="Last Name"
                   name="lastName"
                   autoComplete="lname"
+                  value={formFields.lastName}
                   onChange={handleChange}
                 />
               </Grid>
@@ -278,9 +282,9 @@ const SignUp = () => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <RouterLink to="/login" variant="body2">
                   Already have an account? Log into it
-                </Link>
+                </RouterLink>
               </Grid>
             </Grid>
             <Box mt={5}>

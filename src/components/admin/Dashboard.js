@@ -13,12 +13,11 @@ import Badge from "@material-ui/core/Badge";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { mainListItems } from "./listItems";
-
-import { DashComponent } from "./DashComponent";
+import { MainListItems } from "./listItems";
+import { User } from "./User";
 import { GameForm } from "./GameForm";
-import { GamesTable } from "./GamesTable";
-
+import { Users } from "./Users";
+import { Games } from "./Games";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -107,12 +106,7 @@ export default function Dashboard() {
   console.log(path, url);
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
@@ -121,8 +115,7 @@ export default function Dashboard() {
       <AppBar
         position="absolute"
         className={clsx(classes.appBar, open && classes.appBarShift)}
-      >
-      </AppBar>
+      ></AppBar>
       <Drawer
         variant="permanent"
         classes={{
@@ -131,26 +124,28 @@ export default function Dashboard() {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={() => setOpen(!open)}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>
+          <MainListItems />
+        </List>
         <Divider />
       </Drawer>
       <Switch>
         <Route exact path={path}>
-          <DashComponent
-            classes={classes}
-            fixedHeightPaper={fixedHeightPaper}
-          ></DashComponent>
+          <User />
         </Route>
-        <Route path={[`${path}/addGame/:_id`,`${path}/addGame`]}>
+        <Route path={[`${path}/addGame/:_id`, `${path}/addGame`]}>
           <GameForm />
         </Route>
-        <Route path={`${path}/game-table`}>
-          <GamesTable />
+        <Route path={`${path}/users`}>
+          <Users />
+        </Route>
+        <Route path={`${path}/games`}>
+          <Games />
         </Route>
       </Switch>
     </div>

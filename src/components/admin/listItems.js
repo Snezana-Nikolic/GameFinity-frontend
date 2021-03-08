@@ -1,36 +1,73 @@
-import React from 'react';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import {
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  makeStyles,
+} from "@material-ui/core";
+import { Dashboard, Add, Games, Group } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
-export const mainListItems = (
-  <div>
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText children={<Link to="/admin">Dashboard</Link>} />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText children={<Link to="/admin/addGame">Add game</Link>} />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText children={<Link to="/admin/game-table">All games</Link>} />
-    </ListItem>
-   
-  </div>
-);
+const useStyles = makeStyles((theme) => ({
+  navLink: {
+    textDecoration: "none",
+    color: "#737373",
+  },
+}));
+
+export const MainListItems = () => {
+  const classes = useStyles();
+
+  return (
+    <>
+      <ListItem button>
+        <ListItemIcon>
+          <Dashboard />
+        </ListItemIcon>
+        <ListItemText
+          children={
+            <Link to="/admin" className={classes.navLink}>
+              Dashboard
+            </Link>
+          }
+        />
+      </ListItem>
+      <ListItem button>
+        <ListItemIcon>
+          <Add />
+        </ListItemIcon>
+        <ListItemText
+          children={
+            <Link to="/admin/addGame" className={classes.navLink}>
+              Add game
+            </Link>
+          }
+        />
+      </ListItem>
+      <ListItem button>
+        <ListItemIcon>
+          <Group />
+        </ListItemIcon>
+        <ListItemText
+          children={
+            <Link to="/admin/users" className={classes.navLink}>
+              All users
+            </Link>
+          }
+        />
+      </ListItem>
+      <ListItem button>
+        <ListItemIcon>
+          <Games />
+        </ListItemIcon>
+        <ListItemText
+          children={
+            <Link to="/admin/games" className={classes.navLink}>
+              All games
+            </Link>
+          }
+        />
+      </ListItem>
+    </>
+  );
+};

@@ -6,7 +6,7 @@ import Product from "./components/products/Product";
 import Home from "./pages/Home";
 import User from "./pages/User";
 import WishList from "./pages/WishList";
-import Chat from "./pages/Chat";
+import AboutUs from "./pages/AboutUs";
 import LogIn from "./pages/Login";
 import { PrivateRoute } from "./PrivateRoute";
 import Dashboard from "./components/admin/Dashboard";
@@ -25,10 +25,10 @@ const App = () => (
             <Route exact path="/" component={Home} />
             <Route path="/login" component={LogIn} />
             <Route path="/signup" component={SignUp} />
-            <PrivateRoute path="/user" component={User} />
+            <Route path="/aboutus" component={AboutUs} />
+            {/* <PrivateRoute path="/user" component={User} /> */}
             <PrivateRoute path="/admin" component={Dashboard} />
             <PrivateRoute path="/product/:id" component={Product} />
-            <PrivateRoute path="/chat" component={Chat} />
             <Route
               path="*"
               render={(props) => (

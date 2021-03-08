@@ -1,143 +1,334 @@
-/* eslint-disable array-callback-return */
 import { useState } from "react";
-import { Button } from "@material-ui/core";
-import { useParams } from "react-router-dom";
+// import { Link as RouterLink } from "react-router-dom";
+import {
+  Avatar,
+  Button,
+  CssBaseline,
+  TextField,
+  IconButton,
+  Paper,
+  Input,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Chip,
+  makeStyles,
+  Container,
+} from "@material-ui/core";
+import { Add, PhotoCamera } from "@material-ui/icons";
 import { apiCall } from "../../services/api";
-//  import {white} from 'material-ui/styles/colors';
-import { makeStyles } from "@material-ui/core/styles";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+
+const Copyright = () => (
+  <Typography variant="body2" color="textSecondary" align="center">
+    {"Copyright © "}
+    <Link color="inherit" href="https://material-ui.com/">
+      Your Website
+    </Link>{" "}
+    {new Date().getFullYear()}
+    {"."}
+  </Typography>
+);
 
 const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 305,
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.success.main,
+  },
+  form: {
+    width: "100%",
+    marginTop: theme.spacing(1),
+  },
+  list: {
+    display: "flex",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    listStyle: "none",
+    padding: theme.spacing(0.5),
+    margin: 0,
+  },
+  chip: {
+    margin: theme.spacing(0.5),
+  },
+  hidden: {
+    visibility: "hidden",
+  },
+  green: {
+    color: "#FFFFFF",
+    backgroundColor: theme.palette.success.main,
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+    color: "#FFFFFF",
+    backgroundColor: theme.palette.success.main,
   },
 }));
 
 export const GameForm = () => {
-  const { _id } = useParams();
-  console.log(_id);
   const classes = useStyles();
   const [formFields, setFormFields] = useState({
-    creator: "IO Interactive",
+    user: "603023de4639a438d873ce10",
+    creator: "",
     name: "",
-    version: "",
+    version: "1.0.0",
     genre: ["action", "stealth"],
     state: "",
     quantity: 1,
+    spaceBuck: 0,
     description: "",
     consoleType: ["PS 5"],
-    image: null,
+    image: undefined,
   });
 
-  const onFormFieldChange = ({ target }) =>
+  const handleChange = ({ target }) => {
     setFormFields({
       ...formFields,
-      [target.name]: target.type === "file" ? target.files[0] : target.value,
+      [target.name]:
+        target.type === "file"
+          ? target.files[0]
+          : parseInt(target.value) || target.value,
+    });
+    console.log(target);
+  };
+
+  const handleDelete = (array, value) =>
+    setFormFields({
+      ...formFields,
+      [array]: formFields[array].filter((genre) => genre !== value),
     });
 
-  const onFormSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const formData = new FormData();
-    const { image } = formFields;
-    if (image) formData.append("image", image, image.name);
+    const { image = undefined } = formFields;
+    Object.keys(formFields).forEach((item) =>
+      item === "image" && image
+        ? formData.append(item, image, image.name)
+        : formData.append(item, formFields[item])
+    );
     apiCall
-      .post("/game", { ...formFields, user: localStorage.getItem("user") })
-      .then((response) => console.log(response))
-      .catch((error) =>
-        console.log({ ...formFields, user: localStorage.getItem("user") })
-      );
+      .post("/game", formData)
+      .then((result) => console.log(result))
+      .catch((e) => console.error(e));
   };
-  
+
+  const chips = (state) =>
+    formFields[state].map((element, index) => (
+      <li key={index}>
+        <Chip
+          className={classes.chip}
+          label={element}
+          onDelete={() => handleDelete(state, element)}
+        />
+      </li>
+    ));
+
+  const genre = chips("genre");
+
+  const consoleType = chips("consoleType");
+
   return (
-    <form onSubmit={onFormSubmit}>
-      <label>Creator:</label>
-      <input
-        type="text"
-        name="creator"
-        value={formFields.creator}
-        onChange={onFormFieldChange}
-      />{" "}
-      <br />
-      <label>Name game:</label>
-      <input
-        type="text"
-        name="name"
-        value={formFields.name}
-        onChange={onFormFieldChange}
-      />{" "}
-      <br />
-      <label>Version:</label>
-      <input
-        type="text"
-        name="version"
-        value={formFields.version}
-        onChange={onFormFieldChange}
-      />{" "}
-      <br />
-      {/* {<label>Genre:</label>
-      <input
-        type="text"
-        name="genre"
-        value={formFields.genre}
-        onChange={onFormFieldChange}
-      />{" "}
-      <br />} */}
-      <FormControl className={classes.formControl}>
-        <InputLabel>Console Type:</InputLabel>
-        <Select
-        // value={consoleType}
-        // onChange={handleChange}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value="PS 5">PS 5</MenuItem>
-          <MenuItem value="Xbox one">Xbox One</MenuItem>
-        </Select>
-        <FormHelperText>Some important helper text</FormHelperText>
-      </FormControl>
-      <br />
-      <label>State:</label>
-      <input
-        type="text"
-        name="state"
-        value={formFields.state}
-        onChange={onFormFieldChange}
-      />{" "}
-      <br />
-      <label>Quantity:</label>
-      <input
-        type="text"
-        name="quantity"
-        value={formFields.quantity}
-        onChange={onFormFieldChange}
-      />{" "}
-      <br />
-      <label>Description:</label>
-      <textarea
-        minLength="10"
-        type="text"
-        name="description"
-        value={formFields.description}
-        onChange={onFormFieldChange}
-      />{" "}
-      <br />
-      <br />
-      <label>Cover Image:</label>
-      <input type="file" name="image" onChange={onFormFieldChange} />
-      <br />
-      <br />
-      <Button type="submit" variant="contained" color="primary">
-        Add Blog
-      </Button>
-    </form>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <Add />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Create Game
+        </Typography>
+        <form className={classes.form} onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="name"
+                name="name"
+                variant="outlined"
+                required
+                fullWidth
+                id="name"
+                label="Game Name"
+                value={formFields.name}
+                onChange={handleChange}
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="creator"
+                label="Creator Name"
+                name="creator"
+                autoComplete="creator"
+                value={formFields.creator}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="version"
+                name="version"
+                variant="outlined"
+                required
+                fullWidth
+                id="version"
+                label="Version"
+                value={formFields.version}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="quantity"
+                label="Quantity"
+                name="quantity"
+                autoComplete="quantity"
+                value={formFields.quantity}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                name="genre"
+                label="Genres"
+                type="genre"
+                id="genre"
+                autoComplete="genre"
+                InputProps={{
+                  endAdornment: (
+                    <IconButton onClick={handleChange}>
+                      <Add />
+                    </IconButton>
+                  ),
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Paper component="ul" className={classes.list}>
+                {genre.length ? (
+                  genre
+                ) : (
+                  <Typography>No genres entered yet</Typography>
+                )}
+              </Paper>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                id="consoleType"
+                label="Console Types"
+                name="consoleType"
+                autoComplete="consoleType"
+                InputProps={{
+                  endAdornment: (
+                    <IconButton onClick={handleChange}>
+                      <Add />
+                    </IconButton>
+                  ),
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Paper component="ul" className={classes.list}>
+                {consoleType.length ? (
+                  consoleType
+                ) : (
+                  <Typography>No genres entered yet</Typography>
+                )}
+              </Paper>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="spaceBuck"
+                name="spaceBuck"
+                variant="outlined"
+                required
+                fullWidth
+                id="spaceBuck"
+                label="SpaceBucks"
+                value={formFields.spaceBuck}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="state"
+                label="Game's state"
+                name="state"
+                autoComplete="state"
+                value={formFields.state}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Input
+                className={classes.hidden}
+                accept="image/*"
+                id="contained-button-file"
+                multiple
+                type="file"
+                name="image"
+                onChange={handleChange}
+              />
+              <label htmlFor="contained-button-file">
+                <Button
+                  xs={12}
+                  sm={6}
+                  className={classes.green}
+                  variant="contained"
+                  component="span"
+                  startIcon={<PhotoCamera />}
+                  fullWidth
+                >
+                  Profile Pic
+                </Button>
+              </label>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="description"
+                label="Description"
+                multiline
+                rows={3}
+                value={formFields.description}
+                onChange={handleChange}
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Create Game
+          </Button>
+        </form>
+      </div>
+      <Box mt={5}>
+        <Copyright />
+      </Box>
+    </Container>
   );
 };

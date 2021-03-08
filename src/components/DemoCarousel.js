@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import * as img1 from "../assets/images/img1.jpg";
 import * as img2 from "../assets/images/img2.jpg";
 import * as img3 from "../assets/images/img3.jpg";
-// import * as img4 from "../assets/images/img4.jpg";
 
 const useStyles = makeStyles({
   root: {
@@ -20,9 +19,13 @@ const useStyles = makeStyles({
 export const DemoCarousel = () => {
   const classes = useStyles();
 
-  const images = [img1, img2, img3, /* img4 */];
+  const images = [img1, img2, img3];
 
-  const titles = ["Title1", "Title2", "Title3", /* "Title4" */];
+  const titles = [
+    "Call of Duty: Warzone",
+    "Super Mario 3D World",
+    "Little Nightmares II",
+  ];
 
   return (
     <Carousel

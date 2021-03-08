@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import {
   AppBar,
   Toolbar,
-  Link,
   Box,
   IconButton,
   Button,
@@ -18,10 +17,11 @@ import {
   Home,
   AccountCircle,
   SupervisorAccount,
-  Chat,
+  Info,
 } from "@material-ui/icons";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link as RouterLink } from "react-router-dom";
 import { AuthContext } from "../../contexts/auth";
+import { ReactComponent as Logo } from "../../assets/images/logo.svg";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -93,26 +93,23 @@ export const NavBar = () => {
   return (
     <AppBar position="static" color="inherit">
       <Toolbar className={classes.toolbar}>
-        <Link
-          href="/"
+        <RouterLink
+          to="/"
           color="primary"
           underline="none"
           variant="h5"
           className={classes.brand}
         >
-          <img src="nereus-assets/img/nereus-light.png" alt="" width="110" />
-        </Link>
+          <Logo width={250} />
+        </RouterLink>
         <NavLink to="/" className={classes.navLinkLarge}>
           Home Page
         </NavLink>
-        <NavLink to="/user" className={classes.navLinkLarge}>
+        <NavLink to="/admin" className={classes.navLinkLarge}>
           User Page
         </NavLink>
-        <NavLink to="/admin" className={classes.navLinkLarge}>
-          Admin Page
-        </NavLink>
-        <NavLink to="/chat" className={classes.navLinkLarge}>
-          Chat Room
+        <NavLink to="/aboutus" className={classes.navLinkLarge}>
+          About Us
         </NavLink>
         {!authTokens ? (
           <>
@@ -169,19 +166,15 @@ export const NavBar = () => {
             borderRight={0}
             borderColor="background.emphasis"
           >
-            <Link
-              href="/"
+            <RouterLink
+              to="/"
               color="primary"
               underline="none"
               variant="h5"
               className={classes.brand}
             >
-              <img
-                src="nereus-assets/img/nereus-light.png"
-                alt=""
-                width="110"
-              />
-            </Link>
+              <Logo width={190} height={30} />
+            </RouterLink>
           </Box>
           <List>
             <NavLink exact to="/" className={classes.navLinkSmall}>
@@ -192,28 +185,20 @@ export const NavBar = () => {
                 <ListItemText primary="Home Page" />
               </ListItem>
             </NavLink>
-            <NavLink to="/user" className={classes.navLinkSmall}>
-              <ListItem button key="User Page">
-                <ListItemIcon className={classes.iconWrapper}>
-                  <AccountCircle className={classes.icon} />
-                </ListItemIcon>
-                <ListItemText primary="User Page" />
-              </ListItem>
-            </NavLink>
             <NavLink to="/admin" className={classes.navLinkSmall}>
               <ListItem button key="Admin Page">
                 <ListItemIcon className={classes.iconWrapper}>
                   <SupervisorAccount className={classes.icon} />
                 </ListItemIcon>
-                <ListItemText primary="Admin Page" />
+                <ListItemText primary="User Page" />
               </ListItem>
             </NavLink>
-            <NavLink to="/chat" className={classes.navLinkSmall}>
-              <ListItem button key="Chat Room">
+            <NavLink to="/aboutus" className={classes.navLinkSmall}>
+              <ListItem button key="About Us">
                 <ListItemIcon className={classes.iconWrapper}>
-                  <Chat className={classes.icon} />
+                  <Info className={classes.icon} />
                 </ListItemIcon>
-                <ListItemText primary="Chat Room" />
+                <ListItemText primary="About Us" />
               </ListItem>
             </NavLink>
           </List>

@@ -16,8 +16,6 @@ import { StarBorder, ShoppingCart } from "@material-ui/icons";
 // import Loader from "../../components/Loader";
 
 const useStyles = makeStyles((theme) => ({
-  background: { backgroundColor: "#151a30" },
-  whiteText: { color: "#FFFFFF" },
   card: {
     height: 512,
   },
@@ -67,37 +65,39 @@ const Product = () => {
                   >
                     {product.name}
                   </Typography>
-                  <Typography
-                    variant="h3"
-                    className={classes.whiteText}
-                    component="h3"
-                    gutterBottom={true}
-                  >
+                  <Typography variant="h3" component="h3" gutterBottom={true}>
                     Created by: {product.creator}
                   </Typography>
                   <Typography
                     variant="subtitle1"
                     color="textSecondary"
                     paragraph={true}
-                    className={classes.whiteText}
                   >
                     Descripton: {product.description}
                   </Typography>
-                  <Box component="fieldset" borderColor="transparent">
-                    <Typography
-                      className={classes.whiteText}
-                      component="legend"
-                    >
-                      Average Rating: {product.rating}
-                      <Rating
-                        name="customized-empty"
-                        value={product.rating}
-                        precision={0.1}
-                        max={10}
-                        emptyIcon={<StarBorder fontSize="inherit" />}
-                        readOnly
-                      />
-                    </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    color="textSecondary"
+                    paragraph={true}
+                  >
+                    Price: {product.spaceBuck} SpaceBucks
+                  </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    color="textSecondary"
+                    paragraph={true}
+                  >
+                    Average Rating: {product.rating}
+                  </Typography>
+                  <Box>
+                    <Rating
+                      name="customized-empty"
+                      value={product.rating}
+                      precision={0.1}
+                      max={10}
+                      emptyIcon={<StarBorder fontSize="inherit" />}
+                      readOnly
+                    />
                   </Box>
                   <Box mt={3}>
                     <Button variant="contained" color="primary">
@@ -110,7 +110,10 @@ const Product = () => {
             <Grid item xs={12} md={6}>
               <Card>
                 <CardMedia
-                  image={product.image || ""}
+                  image={
+                    product.image ||
+                    "url(https://i.ytimg.com/vi/vage8rtZGes/maxresdefault.jpg)"
+                  }
                   className={classes.card}
                 />
               </Card>

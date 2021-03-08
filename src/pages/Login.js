@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { apiCall } from "../services/api";
 import { AuthContext } from "../contexts/auth";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link as RouterLink } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -153,9 +153,9 @@ const LogIn = () => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
+                <RouterLink to="/signup" variant="body2">
+                  Don't have an account? Sign Up
+                </RouterLink>
               </Grid>
             </Grid>
             <Box mt={5}>
